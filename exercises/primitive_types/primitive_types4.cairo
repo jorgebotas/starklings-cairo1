@@ -3,25 +3,32 @@
 // Learn how to convert between integer types, and felts.
 // Execute `starklings hint primitive_types4` or use the `hint` watch subcommand for a hint.
 
-// I AM NOT DONE
 
 use traits::Into;
 use traits::TryInto;
 use option::OptionTrait;
 
+
 fn sum_u8s(x: u8, y: u8) -> u8 {
     x + y
 }
 
-//TODO modify the types of this function to prevent an overflow when summing big values
-fn sum_big_numbers(x: u8, y: u8) -> u8 {
+// Modify the types of this function to prevent an overflow when summing big values
+// Convert to felt252 prior to summing
+fn sum_big_numbers(x: u8, y: u8) -> felt252 {
+    let x: felt252 = convert_to_felt(x);
+    let y: felt252 = convert_to_felt(y);
     x + y
 }
 
-fn convert_to_felt(x: u8) -> felt252 { //TODO return x as a felt252.
+fn convert_to_felt(x: u8) -> felt252 { 
+    // return x as a felt252.
+    x.into()
 }
 
-fn convert_felt_to_u8(x: felt252) -> u8 { //TODO return x as a u8.
+fn convert_felt_to_u8(x: felt252) -> u8 {
+    // Return x as a u8.
+    x.try_into().unwrap()
 }
 
 #[test]
@@ -31,11 +38,11 @@ fn test_sum_u8s() {
 
 #[test]
 fn test_sum_big_numbers() {
-    //TODO modify this test to use the correct integer types.
+    // Test to use the correct integer types.
     // Don't modify the values, just the types.
     // See how using the _u8 suffix on the numbers lets us specify the type?
     // Try to do the same thing with other integer types.
-    assert(sum_big_numbers(255_u8, 255_u8) == 510_u8, 'Something went wrong');
+    assert(sum_big_numbers(255_u8, 255_u8) == 510_felt252, 'Something went wrong');
 }
 
 #[test]
