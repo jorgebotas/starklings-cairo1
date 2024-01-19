@@ -4,8 +4,8 @@
 use debug::PrintTrait;
 
 fn main() {
-    let mut number = 1_u8; // don't change this line
+    let number = 1_u8; // don't change this line
     number.print();
-    number = 3; // don't rename this variable
+    let number = 3; // don't rename this variable
     number.print();
 }
